@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Eventos - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-content">
+            <h1>QR Eventos</h1>
+            <div class="user-info">
+                <span id="userName">Usuário</span>
+                <button class="btn btn-secondary" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="#eventos" onclick="showSection('eventos')" class="menu-link active">Eventos</a></li>
+                <li><a href="#obras" onclick="showSection('obras')" class="menu-link">Minhas Obras</a></li>
+                <li><a href="#criar-evento" onclick="showSection('criar-evento')" class="menu-link">Novo Evento</a></li>
+                <li><a href="#criar-obra" onclick="showSection('criar-obra')" class="menu-link">Cadastrar Obra</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <!-- Seção: Eventos -->
+            <div id="eventos" class="section active">
+                <h2>Eventos Disponíveis</h2>
+                <div id="eventosList" class="cards-grid">
+                    <p class="loading">Carregando eventos...</p>
+                </div>
+            </div>
+
+            <!-- Seção: Minhas Obras -->
+            <div id="obras" class="section">
+                <h2>Minhas Obras</h2>
+                <div id="obrasList" class="cards-grid">
+                    <p class="loading">Carregando obras...</p>
+                </div>
+            </div>
+
+            <!-- Seção: Criar Evento -->
+            <div id="criar-evento" class="section">
+                <h2>Criar Novo Evento</h2>
+                <form id="criarEventoForm" class="form-container">
+                    <div class="form-group">
+                        <label>Nome do Evento:</label>
+                        <input type="text" id="nomeEvento" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Local:</label>
+                        <input type="text" id="localEvento" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Data e Hora:</label>
+                        <input type="datetime-local" id="dataHoraEvento" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descrição:</label>
+                        <textarea id="descricaoEvento" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Logo (Imagem):</label>
+                        <input type="file" id="logoEvento" accept="image/*" required>
+                        <small>Formatos: PNG, JPG, GIF</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Criar Evento</button>
+                </form>
+                <div id="criarEventoMsg" class="message" style="display: none;"></div>
+            </div>
+
+            <!-- Seção: Cadastrar Obra -->
+            <div id="criar-obra" class="section">
+                <h2>Cadastrar Nova Obra</h2>
+                <form id="criarObraForm" class="form-container">
+                    <div class="form-group">
+                        <label>Nome da Obra:</label>
+                        <input type="text" id="nomeObra" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Altura (cm):</label>
+                            <input type="number" id="alturaObra" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Largura (cm):</label>
+                            <input type="number" id="larguraObra" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Preço (R$):</label>
+                            <input type="number" id="precoObra" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descrição:</label>
+                        <textarea id="descricaoObra" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Data da Obra:</label>
+                        <input type="date" id="dataObra" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Imagem da Obra:</label>
+                        <input type="file" id="imagemObra" accept="image/*" required>
+                        <small>Formatos: PNG, JPG, GIF</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Cadastrar Obra</button>
+                </form>
+                <div id="criarObraMsg" class="message" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Carregar dados ao abrir dashboard
+        window.addEventListener('load', function() {
+            carregarEventos();
+            exibirDadosUsuario();
+        });
+
+        document.getElementById('criarEventoForm').addEventListener('submit', criarEvento);
+        document.getElementById('criarObraForm').addEventListener('submit', criarObra);
+    </script>
+</body>
+</html>
